@@ -10,10 +10,6 @@ image: Visual Studio 2019
 cache:
   - packages -> **\packages.config
 
-artifacts:
-  - path: '**/*.nupkg' 
-    name: Installers
-
 assembly_info:
   patch: false
 
@@ -22,13 +18,14 @@ dotnet_csproj:
 
 build:
   verbosity: normal
+  publish_nuget: true
+  publish_nuget_symbols: true  
   project: Blurhash-CSharp.sln
 
 deploy:
   - provider: NuGet
     api_key:
       secure: jqIwmV3OZ/q1G3K0pW1zWDUxdPVxgrzkKakxdUSR+OtUpbXYOY1liRWp8PqM9dv9
-
 before_build:
   - cmd: nuget restore
 
