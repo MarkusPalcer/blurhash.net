@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>System.Drawing.Blurhash</RootNamespace>
+    <PackageId>Blurhash.System.Drawing.Common</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Authors>Markus Palcer</Authors>
+    <Description>BlurHash is a compact representation of a placeholder for an image.</Description>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <Copyright>Copyright 2018 Wolt Enterprises</Copyright>
+    <PackageTags>blurhash image preview compression encoding</PackageTags>
+    <PackageProjectUrl>https://github.com/woltapp/blurhash</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blurhash.Core\Blurhash.Core.csproj" />
+  </ItemGroup>
+
+</Project>
