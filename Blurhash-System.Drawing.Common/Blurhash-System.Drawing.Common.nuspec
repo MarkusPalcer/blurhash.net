@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>Blurhash.System.Drawing</id>
+    <id>Blurhash.System.Drawing.Common</id>
     <version>1.1.0</version>
-    <title>Blurhash.System.Drawing</title>
+    <title>Blurhash.System.Drawing.Common</title>
     <authors>Markus Palcer</authors>
     <projectUrl>https://github.com/MarkusPalcer/blurhash.net</projectUrl>
     <description>Bridge library to use Blurhash with System.Drawing</description>
@@ -14,6 +14,7 @@
 
     <dependencies>
       <dependency id="Blurhash.Core" version="1.0.0" />
+      <dependency id="System.Drawing.Common" version="4.5.1" />
     </dependencies>
   </metadata>
 
