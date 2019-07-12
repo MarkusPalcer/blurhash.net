@@ -27,7 +27,7 @@ build:
 deploy:
   - provider: NuGet
     api_key:
-      secure: /HpC7UsOBhYGl5XjEAJlLlqXPSc44HsqfUouWahLp0RERKZadHnYwklAbPe5DDkY
+      secure: jqIwmV3OZ/q1G3K0pW1zWDUxdPVxgrzkKakxdUSR+OtUpbXYOY1liRWp8PqM9dv9
 
 before_build:
   - cmd: nuget restore
