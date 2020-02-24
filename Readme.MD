@@ -1,6 +1,38 @@
-# Usage
+# [BlurHash](http://blurha.sh)
 
-## Using a supported image manipulation library
+BlurHash is a compact representation of a placeholder for an image.
+
+## Why would you want this?
+
+Does your designer cry every time you load their beautifully designed screen, and it is full of empty boxes because all the
+images have not loaded yet? Does your database engineer cry when you want to solve this by trying to cram little thumbnail
+images into your data to show as placeholders?
+
+BlurHash will solve your problems! How? Like this:
+
+<img src="https://github.com/woltapp/blurhash/blob/master/Media/WhyBlurHash.png" width="600">
+
+You can also see nice examples and try it out yourself at [blurha.sh](http://blurha.sh/)!
+
+## How does it work?
+
+In short, BlurHash takes an image, and gives you a short string (only 20-30 characters!) that represents the placeholder for this
+image. You do this on the backend of your service, and store the string along with the image. When you send data to your
+client, you send both the URL to the image, and the BlurHash string. Your client then takes the string, and decodes it into an
+image that it shows while the real image is loading over the network. The string is short enough that it comfortably fits into
+whatever data format you use. For instance, it can easily be added as a field in a JSON object.
+
+In summary:
+
+<img src="https://github.com/woltapp/blurhash/blob/master/Media/HowItWorks1.jpg" width="250">&nbsp;&nbsp;&nbsp;<img src="https://github.com/woltapp/blurhash/blob/master/Media/HowItWorks2.jpg" width="250">
+
+## More Information
+More information can be found in the [base repository](https://github.com/woltapp/blurhash).
+Go there if you want to see the details on how BlurHash works or how to contribute your own port.
+
+## Usage
+
+### Using a supported image manipulation library
 
 1) Install the NuGet-Package for your image manipulation library
    - Install `Blurhash-System.Drawing` if you're using the `System.Drawing.dll` that ships with the .NET-Framework
@@ -18,10 +50,10 @@
    - Call `Encode` and pass the image as well as the number of components for each axis to start encoding.
    - Call `Decode` and pass the Blurhash-string as well as the desired output size to start decoding.
 
-## Using an unsupported image manipulation library
+### Using an unsupported image manipulation library
 Install the NuGet-Package `Blurhash.Core`
 
-### Encoding an image to a Blurhash string
+#### Encoding an image to a Blurhash string
 
 1) Convert all pixels of your image into a 2-dimensional array of `Pixel`-entries (those represent each pixel by three `double`s for each color channel) \
    Note that the first dimension is the X-Coordinate while the second dimension is the Y-Coordinate. \
@@ -30,7 +62,7 @@ Install the NuGet-Package `Blurhash.Core`
 1) Optionally set a progress-callback
 1) Start the operation by calling `CoreEncode` with the array and the number of components for each axis
 
-### Decoding a Blurhash string into an image
+#### Decoding a Blurhash string into an image
 
 1) Instantiate a `CoreDecoder`
 1) Optionally set a progress-callback
@@ -39,12 +71,12 @@ Install the NuGet-Package `Blurhash.Core`
    Note that the first dimension is the X-Coordinate while the second dimension is the Y-Coordinate. \
    In order to convert a double to an integer value in the interval `[0..255]` you can use `MathUtils.LinearToSRgb`.
 
-### Sharing your library specific implementation
+#### Sharing your library specific implementation
 
 Think about sharing your implementation, so others can use it too. \
 Calling it `Blurhash.<Name of your image manipulation library>` would help others to quickly find it on NuGet.org.
 
-# Projects in this solution
+## Projects in this solution
 This list does not contain the projects with names ending in `.Test` as they are the test projects for the ones listed here.
 
 - Blurhash.Core
