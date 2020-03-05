@@ -1,11 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <TargetFramework>netstandard2.1</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Blurhash.Core\Blurhash.Core.csproj" />
+        <ProjectReference Include="..\Blurhash.Core\Blurhash.Core.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
         <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0-beta0007" />
     </ItemGroup>
 
