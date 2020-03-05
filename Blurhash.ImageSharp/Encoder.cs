@@ -33,16 +33,14 @@ namespace Blurhash.ImageSharp
         {
             var width = sourceBitmap.Width;
             var height = sourceBitmap.Height;
+            var bytesPerPixel = sourceBitmap.PixelType.BitsPerPixel / 8;
             var stride = width * 3;
-            
-            var rgbValues = MemoryMarshal.Cast<Rgb24, byte>(sourceBitmap.GetPixelSpan());
-            var bytes = rgbValues.Length;
 
             var result = new Pixel[width, height];
 
             Parallel.ForEach(Enumerable.Range(0, height), y =>
             {
-                var rgbValues = MemoryMarshal.Cast<Rgb24, byte>(sourceBitmap.GetPixelSpan());
+                var rgbValues = MemoryMarshal.AsBytes(sourceBitmap.GetPixelSpan());
                 var index = stride * y;
 
                 for (var x = 0; x < width; x++)
@@ -50,7 +48,7 @@ namespace Blurhash.ImageSharp
                     result[x, y].Red = MathUtils.SRgbToLinear(rgbValues[index]);
                     result[x, y].Green = MathUtils.SRgbToLinear(rgbValues[index + 1]);
                     result[x, y].Blue = MathUtils.SRgbToLinear(rgbValues[index + 2]);
-                    index += 4;
+                    index += bytesPerPixel;
                 }
             });
 
