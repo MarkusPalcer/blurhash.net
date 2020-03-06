@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mime;
 using Blurhash.Core;
@@ -27,23 +28,28 @@ namespace Blurhash.ImageSharp
         /// Converts the library-independent representation of pixels into a bitmap
         /// </summary>
         /// <param name="pixelData">The library-independent representation of the image</param>
-        /// <returns>A <c>System.Drawing.Bitmap</c> in 32bpp-RGB representation</returns>
+        /// <returns>A <c>Image&lt;Rgb24&gt;</c> in 24bpp-RGB representation</returns>
         internal static Image<Rgb24> ConvertToBitmap(Blurhash.Core.Pixel[,] pixelData)
         {
             var width = pixelData.GetLength(0);
             var height = pixelData.GetLength(1);
 
-            var data = Enumerable.Range(0, height)
-                .SelectMany(y => Enumerable.Range(0, width).Select(x => (x, y)))
-                .Select(tuple => pixelData[tuple.x, tuple.y])
-                .SelectMany(pixel => new byte[]
+            IEnumerable<byte> GenerateBitmap()
+            {
+                for (int y = 0; y < height; y++)
                 {
-                    (byte) MathUtils.LinearTosRgb(pixel.Red), (byte) MathUtils.LinearTosRgb(pixel.Green),
-                    (byte) MathUtils.LinearTosRgb(pixel.Blue)
-                })
-                .ToArray();
+                    for (int x = 0; x < width; x++)
+                    {
+                        var pixel = pixelData[x, y];
+                        yield return (byte) MathUtils.LinearTosRgb(pixel.Red);
+                        yield return (byte) MathUtils.LinearTosRgb(pixel.Green);
+                        yield return (byte) MathUtils.LinearTosRgb(pixel.Blue);
+                    }
+                }
+            }
 
-            return Image.LoadPixelData<Rgb24>(data.AsSpan(), width, height);
+            var data = GenerateBitmap().ToArray();
+            return Image.LoadPixelData<Rgb24>(data, width, height);
         }
     }
 }
