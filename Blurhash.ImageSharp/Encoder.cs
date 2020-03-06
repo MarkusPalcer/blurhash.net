@@ -20,7 +20,7 @@ namespace Blurhash.ImageSharp
         /// <param name="componentsX">The number of components used on the X-Axis for the DCT</param>
         /// <param name="componentsY">The number of components used on the Y-Axis for the DCT</param>
         /// <returns>The resulting Blurhash string</returns>
-        public string Encode(Image<Rgb24> image, int componentsX, int componentsY)
+        public string Encode(Image<Rgba32> image, int componentsX, int componentsY)
         {
             return CoreEncode(ConvertBitmap(image), componentsX, componentsY);
         }
@@ -29,7 +29,7 @@ namespace Blurhash.ImageSharp
         /// Converts the given bitmap to the library-independent representation used within the Blurhash-core
         /// </summary>
         /// <param name="sourceBitmap">The bitmap to encode</param>
-        public static Pixel[,] ConvertBitmap(Image<Rgb24> sourceBitmap)
+        internal static Pixel[,] ConvertBitmap(Image<Rgba32> sourceBitmap)
         {
             var width = sourceBitmap.Width;
             var height = sourceBitmap.Height;
@@ -37,11 +37,12 @@ namespace Blurhash.ImageSharp
             var stride = width * 3;
 
             var result = new Pixel[width, height];
-
-            Parallel.ForEach(Enumerable.Range(0, height), y =>
+            
+            for (int y = 0; y < height; y++)
             {
-                var rgbValues = MemoryMarshal.AsBytes(sourceBitmap.GetPixelSpan());
-                var index = stride * y;
+                var rgbValues = MemoryMarshal.AsBytes(sourceBitmap.GetPixelRowSpan(y));
+
+                var index = stride;
 
                 for (var x = 0; x < width; x++)
                 {
@@ -50,7 +51,7 @@ namespace Blurhash.ImageSharp
                     result[x, y].Blue = MathUtils.SRgbToLinear(rgbValues[index + 2]);
                     index += bytesPerPixel;
                 }
-            });
+            }
 
             return result;
         }
