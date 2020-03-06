@@ -34,25 +34,20 @@ namespace Blurhash.ImageSharp
             var width = pixelData.GetLength(0);
             var height = pixelData.GetLength(1);
 
-            Rgb24[] GenerateBitmap()
+            Rgb24[] data = new Rgb24[width*height];
+            for (int y = 0; y < height; y++)
             {
-                Rgb24[] result = new Rgb24[width*height];
-                for (int y = 0; y < height; y++)
+                Span<Rgb24> rowSpan = data.AsSpan().Slice(y * width, width);
+                for (int x = 0; x < width; x++)
                 {
-                    Span<Rgb24> rowSpan = result.AsSpan().Slice(y*width, width);
-                    for (int x = 0; x < width; x++)
-                    {
-                        var pixel = pixelData[x, y];
-                        ref Rgb24 dest = ref rowSpan[x];
-                        dest.R = (byte) MathUtils.LinearTosRgb(pixel.Red);
-                        dest.G = (byte) MathUtils.LinearTosRgb(pixel.Green);
-                        dest.B = (byte) MathUtils.LinearTosRgb(pixel.Blue);
-                    }
+                    var pixel = pixelData[x, y];
+                    ref Rgb24 dest = ref rowSpan[x];
+                    dest.R = (byte) MathUtils.LinearTosRgb(pixel.Red);
+                    dest.G = (byte) MathUtils.LinearTosRgb(pixel.Green);
+                    dest.B = (byte) MathUtils.LinearTosRgb(pixel.Blue);
                 }
-                return result;
             }
 
-            var data = GenerateBitmap().ToArray();
             return Image.LoadPixelData<Rgb24>(data, width, height);
         }
     }
