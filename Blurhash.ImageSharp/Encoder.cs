@@ -20,6 +20,18 @@ namespace Blurhash.ImageSharp
         /// <param name="componentsX">The number of components used on the X-Axis for the DCT</param>
         /// <param name="componentsY">The number of components used on the Y-Axis for the DCT</param>
         /// <returns>The resulting Blurhash string</returns>
+        public string Encode(Image<Rgb24> image, int componentsX, int componentsY)
+        {
+            return CoreEncode(ConvertBitmap(image), componentsX, componentsY);
+        }
+        
+        /// <summary>
+        /// Encodes a picture into a Blurhash string
+        /// </summary>
+        /// <param name="image">The picture to encode</param>
+        /// <param name="componentsX">The number of components used on the X-Axis for the DCT</param>
+        /// <param name="componentsY">The number of components used on the Y-Axis for the DCT</param>
+        /// <returns>The resulting Blurhash string</returns>
         public string Encode(Image<Rgba32> image, int componentsX, int componentsY)
         {
             return CoreEncode(ConvertBitmap(image), componentsX, componentsY);
@@ -29,7 +41,7 @@ namespace Blurhash.ImageSharp
         /// Converts the given bitmap to the library-independent representation used within the Blurhash-core
         /// </summary>
         /// <param name="sourceBitmap">The bitmap to encode</param>
-        internal static Pixel[,] ConvertBitmap(Image<Rgba32> sourceBitmap)
+        internal static Pixel[,] ConvertBitmap<T>(Image<T> sourceBitmap) where T : struct, IPixel<T>
         {
             var width = sourceBitmap.Width;
             var height = sourceBitmap.Height;
