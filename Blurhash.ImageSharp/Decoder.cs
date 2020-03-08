@@ -1,7 +1,5 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net.Mime;
 using Blurhash.Core;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -29,7 +27,7 @@ namespace Blurhash.ImageSharp
         /// </summary>
         /// <param name="pixelData">The library-independent representation of the image</param>
         /// <returns>A <c>Image&lt;Rgb24&gt;</c> in 24bpp-RGB representation</returns>
-        internal static Image<Rgb24> ConvertToBitmap(Blurhash.Core.Pixel[,] pixelData)
+        internal static Image<Rgb24> ConvertToBitmap(Pixel[,] pixelData)
         {
             var width = pixelData.GetLength(0);
             var height = pixelData.GetLength(1);
@@ -48,7 +46,7 @@ namespace Blurhash.ImageSharp
                 }
             }
 
-            return Image.LoadPixelData<Rgb24>(data, width, height);
+            return Image.WrapMemory<Rgb24>(Configuration.Default, new Memory<Rgb24>(data), width, height);
         }
     }
 }
