@@ -25,7 +25,7 @@ namespace Blurhash.Core
         /// <param name="outputHeight">The desired height of the output in pixels</param>
         /// <param name="punch">A value that affects the contrast of the decoded image. 1 means normal, smaller values will make the effect more subtle, and larger values will make it stronger.</param>
         /// <returns>A 2-dimensional array of <see cref="Pixel"/>s </returns>
-        protected Pixel[,] CoreDecode(string blurhash, int outputWidth, int outputHeight, double punch = 1.0) {
+        public Pixel[,] CoreDecode(string blurhash, int outputWidth, int outputHeight, double punch = 1.0) {
             if (blurhash.Length < 6) {
                 throw new ArgumentException("Blurhash value needs to be at least 6 characters", nameof(blurhash));
             }
