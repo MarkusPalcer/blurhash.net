@@ -24,7 +24,7 @@ namespace Blurhash.Core
         /// <param name="componentsX">The number of components used on the X-Axis for the DCT</param>
         /// <param name="componentsY">The number of components used on the Y-Axis for the DCT</param>
         /// <returns>The resulting Blurhash string</returns>
-        protected string CoreEncode(Pixel[,] pixels, int componentsX, int componentsY)
+        public string CoreEncode(Pixel[,] pixels, int componentsX, int componentsY)
         {
             if (componentsX < 1) throw new ArgumentException("componentsX needs to be at least 1");
             if (componentsX > 9) throw new ArgumentException("componentsX needs to be at most 9");
