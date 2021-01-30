@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net472</TargetFramework>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
         <PackageId>Blurhash.System.Drawing.Common</PackageId>
@@ -20,7 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+      <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
     </ItemGroup>
 
 </Project>
