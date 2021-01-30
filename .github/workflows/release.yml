@@ -1,0 +1,23 @@
+name: Release
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2.3.3
+      - name: Restore packages
+        run: nuget restore
+      - name: Build
+        run: dotnet build -c Release
+      - name: Test
+        run: dotnet test --no-build --verbosity normal
+      - name: Package
+        run: dotnet pack -c Release
+      - name: Publish if version has changed
+        run: dotnet nuget push **/Release/*.nupkg -s https://www.nuget.org -k ${{ secrets.NUGET_KEY }} --skip-duplicate
+
