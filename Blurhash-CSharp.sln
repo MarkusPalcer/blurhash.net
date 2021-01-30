@@ -7,6 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		License.txt = License.txt
 		Readme.MD = Readme.MD
+		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.Core", "Blurhash.Core\Blurhash.Core.csproj", "{B292D7A1-172D-45A7-86CF-AAB0D7565C5B}"
@@ -30,6 +31,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImageSharp", "ImageSharp", "{836DA7C1-6ED5-46D8-91D7-C8C421769712}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blurhash.ImageSharp", "Blurhash.ImageSharp\Blurhash.ImageSharp.csproj", "{51ADA589-035D-4EC8-91F4-2CD7D899EC3B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Workflows", "Workflows", "{032F8FC6-29C2-4DC4-AB07-2C8836A4ABF3}"
+ProjectSection(SolutionItems) = preProject
+	.github\workflows\dotnet.yml = .github\workflows\dotnet.yml
+EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +83,7 @@ Global
 		{93979E1C-CDD4-4B1B-9096-A0CAEB176551} = {1E9AAF8F-5723-4B38-BE3E-ADB0F0CB9188}
 		{C72CB808-7AF6-451C-94D1-4D34F787DE70} = {1E9AAF8F-5723-4B38-BE3E-ADB0F0CB9188}
 		{51ADA589-035D-4EC8-91F4-2CD7D899EC3B} = {836DA7C1-6ED5-46D8-91D7-C8C421769712}
+		{032F8FC6-29C2-4DC4-AB07-2C8836A4ABF3} = {0B2577A6-2946-43B0-8288-09C671EC3AA7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAAE36B0-9BF1-46D3-BA1F-051172483AE0}
