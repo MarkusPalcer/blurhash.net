@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Blurhash.System.Drawing.Common\Blurhash.System.Drawing.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="FluentAssertions" Version="4.3.0" />
+      <PackageReference Include="MSTest.TestFramework" Version="1.4.0" />
+    </ItemGroup>
+
+</Project>

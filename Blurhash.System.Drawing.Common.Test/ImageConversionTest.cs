@@ -2,7 +2,8 @@
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace System.Drawing.Blurhash.DotNetStandard.Test
+// ReSharper disable once CheckNamespace Justification: Meant to extend the System.Drawing.Common-Namespace
+namespace System.Drawing.Common.Blurhash
 {
     [TestClass]
     public class ImageConversionTest

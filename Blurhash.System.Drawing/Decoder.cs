@@ -5,7 +5,7 @@ using Blurhash.Core;
 namespace System.Drawing.Blurhash
 {
     /// <summary>
-    /// The Blurhash-Decoder for use with the System.Drawing.Common package
+    /// The Blurhash-Decoder for use with the System.Drawing.dll
     /// </summary>
     public class Decoder : CoreDecoder
     {
@@ -28,7 +28,7 @@ namespace System.Drawing.Blurhash
         /// </summary>
         /// <param name="pixelData">The library-independent representation of the image</param>
         /// <returns>A <c>System.Drawing.Bitmap</c> in 32bpp-RGB representation</returns>
-        internal static unsafe Bitmap ConvertToBitmap(global::Blurhash.Core.Pixel[,] pixelData)
+        internal static unsafe Bitmap ConvertToBitmap(Pixel[,] pixelData)
         {
             var width = pixelData.GetLength(0);
             var height = pixelData.GetLength(1);
