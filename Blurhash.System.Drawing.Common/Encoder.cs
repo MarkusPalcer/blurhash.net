@@ -3,12 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blurhash.Core;
 
-namespace System.Drawing.Blurhash
+// ReSharper disable once CheckNamespace Justification: Meant to extend the System.Drawing.Common-Namespace
+namespace System.Drawing.Common.Blurhash
 {
     /// <summary>
     /// The Blurhash encoder for use with the <code>System.Drawing.Common</code> package
     /// </summary>
-    public class Encoder : CoreEncoder 
+    public class Encoder : CoreEncoder
     {
         /// <summary>
         /// Encodes a picture into a Blurhash string
@@ -38,7 +39,7 @@ namespace System.Drawing.Blurhash
                     graphics.DrawImageUnscaled(sourceBitmap, 0, 0);
                 }
 
-                // Lock the bitmap's bits.  
+                // Lock the bitmap's bits.
                 var bmpData = temporaryBitmap.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, temporaryBitmap.PixelFormat);
 
                 // Get the address of the first line.

@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
+    
     <PackageId>Blurhash.Core</PackageId>
     <PackageVersion>1.1.0</PackageVersion>
     <Authors>Markus Palcer</Authors>

@@ -2,10 +2,11 @@
 using System.Linq;
 using Blurhash.Core;
 
-namespace System.Drawing.Blurhash
+// ReSharper disable once CheckNamespace Justification: Meant to extend the System.Drawing.Common-Namespace
+namespace System.Drawing.Common.Blurhash
 {
     /// <summary>
-    /// The Blurhash-Decoder for use with the System.Drawing.dll
+    /// The Blurhash-Decoder for use with the System.Drawing.Common package
     /// </summary>
     public class Decoder : CoreDecoder
     {
@@ -28,7 +29,7 @@ namespace System.Drawing.Blurhash
         /// </summary>
         /// <param name="pixelData">The library-independent representation of the image</param>
         /// <returns>A <c>System.Drawing.Bitmap</c> in 32bpp-RGB representation</returns>
-        internal static unsafe Bitmap ConvertToBitmap(global::Blurhash.Core.Pixel[,] pixelData)
+        internal static unsafe Bitmap ConvertToBitmap(Pixel[,] pixelData)
         {
             var width = pixelData.GetLength(0);
             var height = pixelData.GetLength(1);
