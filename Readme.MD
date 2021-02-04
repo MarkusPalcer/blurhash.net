@@ -55,18 +55,18 @@ Install the NuGet-Package `Blurhash.Core`
 
 #### Encoding an image to a Blurhash string
 
+1) Inherit a class from `CoreEncoder`
 1) Convert all pixels of your image into a 2-dimensional array of `Pixel`-entries (those represent each pixel by three `double`s for each color channel) \
    Note that the first dimension is the X-Coordinate while the second dimension is the Y-Coordinate. \
    In order to convert an integer value in the interval `[0..255]` to its double representation you can use `MathUtils.SRgbToLinear`.
-1) Instantiate a `CoreEncoder`
 1) Optionally set a progress-callback
-1) Start the operation by calling `CoreEncode` with the array and the number of components for each axis
+1) Start the operation by calling `base.CoreEncode` with the array and the number of components for each axis
 
 #### Decoding a Blurhash string into an image
 
-1) Instantiate a `CoreDecoder`
+1) Inherit a class from `CoreDecoder`
 1) Optionally set a progress-callback
-1) Start the operation by calling `CoreDecode` with the desired output size.
+1) Start the operation by calling `base.CoreDecode` with the desired output size.
 1) You receive a 2-dimensional array of `Pixel`-entries which you need to decode into your image representation. \
    Note that the first dimension is the X-Coordinate while the second dimension is the Y-Coordinate. \
    In order to convert a double to an integer value in the interval `[0..255]` you can use `MathUtils.LinearToSRgb`.
@@ -86,3 +86,5 @@ This list does not contain the projects with names ending in `.Test` as they are
   This is only available in Windows projects as it uses GDI+
 - Blurhash-System.Drawing.Common
   Bridge-Library to use Blurhash with the System.Drawing.Common NuGet-Library in DotNetStandard
+- Blurhash.ImageSharp
+  Bridge-Library to use Blurhash with ImageSharp
