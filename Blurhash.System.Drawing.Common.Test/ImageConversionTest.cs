@@ -18,7 +18,7 @@ namespace System.Drawing.Common.Blurhash
             for (var x = 0; x < 20; x++)
                 for (var y = 0; y < 20; y++)
                 {
-                    sourceImage.SetPixel(x, y, Color.FromArgb(rnd.Next(0, 1) * 255, rnd.Next(0, 1) * 255, rnd.Next(0, 1) * 255));
+                    sourceImage.SetPixel(x, y, Color.FromArgb(rnd.Next(0, 2) * 255, rnd.Next(0, 2) * 255, rnd.Next(0, 2) * 255));
                 }
 
             var sourceData = Encoder.ConvertBitmap(sourceImage);
@@ -52,7 +52,7 @@ namespace System.Drawing.Common.Blurhash
             for (var x = 0; x < 20; x++)
             for (var y = 0; y < 20; y++)
             {
-                sourceImage.SetPixel(x, y, Color.FromArgb(rnd.Next(0, 1) * 255, rnd.Next(0, 1) * 255, rnd.Next(0, 1) * 255));
+                sourceImage.SetPixel(x, y, Color.FromArgb(rnd.Next(0, 2) * 255, rnd.Next(0, 2) * 255, rnd.Next(0, 2) * 255));
             }
 
             var sourceData = Encoder.ConvertBitmap(sourceImage);
