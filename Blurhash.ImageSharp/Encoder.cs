@@ -49,7 +49,6 @@ namespace Blurhash.ImageSharp
             var width = sourceBitmap.Width;
             var height = sourceBitmap.Height;
             var bytesPerPixel = sourceBitmap.PixelType.BitsPerPixel / 8;
-            var stride = width * 3;
 
             var result = new Pixel[width, height];
             
