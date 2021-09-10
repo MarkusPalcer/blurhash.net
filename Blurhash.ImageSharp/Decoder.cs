@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Blurhash.Core;
 using SixLabors.ImageSharp;
 using SixLabors.ImageSharp.PixelFormats;
@@ -18,7 +17,7 @@ namespace Blurhash.ImageSharp
         /// <returns>The decoded preview</returns>
         public Image<Rgb24> Decode(string blurhash, int outputWidth, int outputHeight, double punch = 1.0)
         {
-            var pixelData = base.CoreDecode(blurhash, outputWidth, outputHeight, punch);
+            var pixelData = CoreDecode(blurhash, outputWidth, outputHeight, punch);
             return ConvertToBitmap(pixelData);
         }
 
@@ -46,7 +45,7 @@ namespace Blurhash.ImageSharp
                 }
             }
 
-            return Image.WrapMemory<Rgb24>(Configuration.Default, new Memory<Rgb24>(data), width, height);
+            return Image.WrapMemory(Configuration.Default, new Memory<Rgb24>(data), width, height);
         }
     }
 }
