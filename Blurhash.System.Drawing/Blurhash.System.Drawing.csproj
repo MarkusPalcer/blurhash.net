@@ -5,7 +5,7 @@
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
         <PackageId>Blurhash.System.Drawing</PackageId>
-        <PackageVersion>2.0.0</PackageVersion>
+        <PackageVersion>2.1.0</PackageVersion>
         <Authors>Markus Palcer</Authors>
         <Description>BlurHash is a compact representation of a placeholder for an image.</Description>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

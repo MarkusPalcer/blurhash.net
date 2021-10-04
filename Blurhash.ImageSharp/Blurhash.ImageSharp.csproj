@@ -5,7 +5,7 @@
         <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
 
         <PackageId>Blurhash.ImageSharp</PackageId>
-        <PackageVersion>1.1.0</PackageVersion>
+        <PackageVersion>1.1.1</PackageVersion>
         <Authors>Markus Palcer</Authors>
         <Description>BlurHash is a compact representation of a placeholder for an image.</Description>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
