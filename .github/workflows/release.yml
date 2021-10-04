@@ -15,7 +15,7 @@ jobs:
       - name: Build
         run: dotnet build -c Release
       - name: Test
-        run: dotnet test --no-build --verbosity normal
+        run: dotnet test --verbosity normal
       - name: Package
         run: dotnet pack -c Release
       - name: Publish if version has changed
