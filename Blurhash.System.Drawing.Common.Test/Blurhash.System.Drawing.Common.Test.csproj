@@ -1,7 +1,8 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+    <!-- This should be in sync with the TFMs of the tested project (sans the frameworks invalid for test projects) -->
+        <TargetFrameworks>net472;net5.0</TargetFrameworks>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
