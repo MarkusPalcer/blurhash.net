@@ -1,14 +1,13 @@
 ﻿using System.Drawing.Imaging;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 // ReSharper disable once CheckNamespace Justification: Meant to extend the System.Drawing.Common-Namespace
 namespace System.Drawing.Common.Blurhash
 {
-    [TestClass]
     public class ImageConversionTest
     {
-        [TestMethod]
+        [Fact]
         public void TestConversion24BppRgb()
         {
             var rnd = new Random();
@@ -42,7 +41,7 @@ namespace System.Drawing.Common.Blurhash
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestConversion32BppRgb()
         {
             var rnd = new Random();
