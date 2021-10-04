@@ -1,13 +1,12 @@
 ﻿using System.Drawing.Imaging;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Xunit;
 
 namespace System.Drawing.Blurhash.DotNetFramework.Test
 {
-    [TestClass]
     public class ImageConversionTest
     {
-        [TestMethod]
+        [Fact]
         public void TestConversion24BppRgb()
         {
             var rnd = new Random();
@@ -41,7 +40,7 @@ namespace System.Drawing.Blurhash.DotNetFramework.Test
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestConversion32BppRgb()
         {
             var rnd = new Random();
