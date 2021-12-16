@@ -12,6 +12,7 @@
     <PackageTags>blurhash image preview compression encoding</PackageTags>
     <PackageProjectUrl>https://github.com/MarkusPalcer/blurhash.net</PackageProjectUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>

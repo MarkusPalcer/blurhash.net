@@ -12,7 +12,8 @@
         <Copyright>Copyright 2019 Markus Palcer</Copyright>
         <PackageTags>blurhash image preview compression encoding</PackageTags>
         <PackageProjectUrl>https://github.com/MarkusPalcer/blurhash.net</PackageProjectUrl>
-        <PackageLicenseExpression>MIT</PackageLicenseExpression>        
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+        <RootNamespace>System.Drawing.Blurhash</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
