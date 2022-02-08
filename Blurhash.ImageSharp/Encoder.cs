@@ -46,21 +46,24 @@ namespace Blurhash.ImageSharp
             var bytesPerPixel = sourceBitmap.PixelType.BitsPerPixel / 8;
 
             var result = new Pixel[width, height];
-            
-            for (int y = 0; y < height; y++)
+
+            sourceBitmap.ProcessPixelRows(pixelAccessor =>
             {
-                var rgbValues = MemoryMarshal.AsBytes(sourceBitmap.GetPixelRowSpan(y));
-
-                var index = 0;
-
-                for (var x = 0; x < width; x++)
+                for (var y = 0; y < pixelAccessor.Height; y++)
                 {
-                    result[x, y].Red = MathUtils.SRgbToLinear(rgbValues[index]);
-                    result[x, y].Green = MathUtils.SRgbToLinear(rgbValues[index + 1]);
-                    result[x, y].Blue = MathUtils.SRgbToLinear(rgbValues[index + 2]);
-                    index += bytesPerPixel;
+                    var rgbValues = MemoryMarshal.AsBytes(pixelAccessor.GetRowSpan(y));
+
+                    var index = 0;
+
+                    for (var x = 0; x < width; x++)
+                    {
+                        result[x, y].Red = MathUtils.SRgbToLinear(rgbValues[index]);
+                        result[x, y].Green = MathUtils.SRgbToLinear(rgbValues[index + 1]);
+                        result[x, y].Blue = MathUtils.SRgbToLinear(rgbValues[index + 2]);
+                        index += bytesPerPixel;
+                    }
                 }
-            }
+            });
 
             return result;
         }
