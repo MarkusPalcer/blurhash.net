@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29020.237
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0B2577A6-2946-43B0-8288-09C671EC3AA7}"
 	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
 		License.txt = License.txt
 		Readme.MD = Readme.MD
-		.gitignore = .gitignore
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.Core", "Blurhash.Core\Blurhash.Core.csproj", "{B292D7A1-172D-45A7-86CF-AAB0D7565C5B}"
@@ -20,17 +20,19 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "System.Drawing.Common", "Sy
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ImageSharp", "ImageSharp", "{836DA7C1-6ED5-46D8-91D7-C8C421769712}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blurhash.ImageSharp", "Blurhash.ImageSharp\Blurhash.ImageSharp.csproj", "{51ADA589-035D-4EC8-91F4-2CD7D899EC3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.ImageSharp", "Blurhash.ImageSharp\Blurhash.ImageSharp.csproj", "{51ADA589-035D-4EC8-91F4-2CD7D899EC3B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blurhash.Core.Test", "Blurhash.Core.Test\Blurhash.Core.Test.csproj", "{C6EE540A-A8BA-49DA-915E-5E919F88C302}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.Core.Test", "Blurhash.Core.Test\Blurhash.Core.Test.csproj", "{C6EE540A-A8BA-49DA-915E-5E919F88C302}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blurhash.System.Drawing", "Blurhash.System.Drawing\Blurhash.System.Drawing.csproj", "{F7A7935F-00ED-4B20-BEF0-9DDABC527035}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.System.Drawing", "Blurhash.System.Drawing\Blurhash.System.Drawing.csproj", "{F7A7935F-00ED-4B20-BEF0-9DDABC527035}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blurhash.System.Drawing.Test", "Blurhash.System.Drawing.Test\Blurhash.System.Drawing.Test.csproj", "{6F67B1E3-25A0-418F-A451-C6EE8388463B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.System.Drawing.Test", "Blurhash.System.Drawing.Test\Blurhash.System.Drawing.Test.csproj", "{6F67B1E3-25A0-418F-A451-C6EE8388463B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blurhash.System.Drawing.Common", "Blurhash.System.Drawing.Common\Blurhash.System.Drawing.Common.csproj", "{4924E9C0-4F56-421D-81CB-D1774A945053}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.System.Drawing.Common", "Blurhash.System.Drawing.Common\Blurhash.System.Drawing.Common.csproj", "{4924E9C0-4F56-421D-81CB-D1774A945053}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blurhash.System.Drawing.Common.Test", "Blurhash.System.Drawing.Common.Test\Blurhash.System.Drawing.Common.Test.csproj", "{909752D6-4CBF-4E3D-906F-F8A9AAD3BB48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.System.Drawing.Common.Test", "Blurhash.System.Drawing.Common.Test\Blurhash.System.Drawing.Common.Test.csproj", "{909752D6-4CBF-4E3D-906F-F8A9AAD3BB48}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.ImageSharp.Test", "Blurhash.ImageSharp.Test\Blurhash.ImageSharp.Test.csproj", "{A2B44B3C-CE46-4A80-8BB1-E7896CDA9224}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -66,6 +68,10 @@ Global
 		{909752D6-4CBF-4E3D-906F-F8A9AAD3BB48}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{909752D6-4CBF-4E3D-906F-F8A9AAD3BB48}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{909752D6-4CBF-4E3D-906F-F8A9AAD3BB48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2B44B3C-CE46-4A80-8BB1-E7896CDA9224}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2B44B3C-CE46-4A80-8BB1-E7896CDA9224}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2B44B3C-CE46-4A80-8BB1-E7896CDA9224}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2B44B3C-CE46-4A80-8BB1-E7896CDA9224}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -78,6 +84,7 @@ Global
 		{6F67B1E3-25A0-418F-A451-C6EE8388463B} = {1F0D4320-FCC3-4566-8411-A331684876F2}
 		{4924E9C0-4F56-421D-81CB-D1774A945053} = {1E9AAF8F-5723-4B38-BE3E-ADB0F0CB9188}
 		{909752D6-4CBF-4E3D-906F-F8A9AAD3BB48} = {1E9AAF8F-5723-4B38-BE3E-ADB0F0CB9188}
+		{A2B44B3C-CE46-4A80-8BB1-E7896CDA9224} = {836DA7C1-6ED5-46D8-91D7-C8C421769712}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BAAE36B0-9BF1-46D3-BA1F-051172483AE0}

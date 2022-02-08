@@ -1,11 +1,11 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <!-- This should be in sync with the TFMs of SixLabors.ImageSharp -->
-        <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;netstandard1.3;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;netstandard2.0;netstandard2.1</TargetFrameworks>
 
         <PackageId>Blurhash.ImageSharp</PackageId>
-        <PackageVersion>1.1.1</PackageVersion>
+        <PackageVersion>2.0.0</PackageVersion>
         <Authors>Markus Palcer</Authors>
         <Description>BlurHash is a compact representation of a placeholder for an image.</Description>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -20,7 +20,7 @@
     </ItemGroup>
             
     <ItemGroup>
-        <PackageReference Include="SixLabors.ImageSharp" Version="1.0.0" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="2.0.0" />
     </ItemGroup>
 
 </Project>
