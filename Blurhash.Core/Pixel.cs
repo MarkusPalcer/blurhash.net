@@ -11,9 +11,9 @@
 
         public Pixel(double red, double green, double blue)
         {
-            this.Red = red;
-            this.Green = green;
-            this.Blue = blue;
+            Red = red;
+            Green = green;
+            Blue = blue;
         }
     }
 }

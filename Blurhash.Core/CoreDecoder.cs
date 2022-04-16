@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Linq;
 using System.Numerics;
-using System.Threading.Tasks;
 
 namespace Blurhash.Core
 {
@@ -25,96 +23,113 @@ namespace Blurhash.Core
         /// <param name="outputHeight">The desired height of the output in pixels</param>
         /// <param name="punch">A value that affects the contrast of the decoded image. 1 means normal, smaller values will make the effect more subtle, and larger values will make it stronger.</param>
         /// <returns>A 2-dimensional array of <see cref="Pixel"/>s </returns>
+        [Obsolete("Use the other version of CoreDecode which will fill a pixel-array in place instead")]
         protected Pixel[,] CoreDecode(string blurhash, int outputWidth, int outputHeight, double punch = 1.0) {
+            var pixels = new Pixel[outputWidth, outputHeight];
+
+            CoreDecode(blurhash, pixels, punch);
+
+            return pixels;
+        }
+
+        /// <summary>
+        /// Decodes a Blurhash string into a 2-dimensional array of pixels
+        /// </summary>
+        /// <param name="blurhash">The blurhash string to decode</param>
+        /// <param name="pixels">
+        ///     A two-dimensional array that will be filled with the pixel data.<br />
+        ///     First dimension is the width, second dimension is the height
+        /// </param>
+        /// <param name="punch">A value that affects the contrast of the decoded image. 1 means normal, smaller values will make the effect more subtle, and larger values will make it stronger.</param>
+        /// <returns>A 2-dimensional array of <see cref="Pixel"/>s </returns>
+        protected void CoreDecode(string blurhash, Pixel[,] pixels, double punch = 1.0)
+        {
             if (blurhash.Length < 6) {
                 throw new ArgumentException("Blurhash value needs to be at least 6 characters", nameof(blurhash));
             }
 
-            var sizeFlag = (int) new[] {blurhash[0]}.DecodeBase83Integer();
+            var blurhashSpan = blurhash.AsSpan();
+
+            var outputWidth = pixels.GetLength(0);
+            var outputHeight = pixels.GetLength(1);
+
+            var sizeFlag = blurhashSpan.Slice(0, 1).DecodeBase83();
 
             var componentsY = sizeFlag / 9 + 1;
             var componentsX = sizeFlag % 9 + 1;
+            var componentCount = componentsX * componentsY;
 
             if (blurhash.Length != 4 + 2 * componentsX * componentsY) {
                 throw new ArgumentException("Blurhash value is missing data", nameof(blurhash));
             }
 
-            var quantizedMaximumValue = (double) new[] {blurhash[1]}.DecodeBase83Integer();
+            var quantizedMaximumValue = (double) blurhashSpan.Slice(1, 1).DecodeBase83();
             var maximumValue = (quantizedMaximumValue + 1.0) / 166.0;
 
             var coefficients = new Pixel[componentsX, componentsY];
-            {
-                var i = 0;
-                for (var y = 0; y < componentsY; y++)
-                {
-                    for (var x = 0; x < componentsX; x++)
-                    {
-                        if (x == 0 && y == 0)
-                        {
-                            var substring = blurhash.Substring(2, 4);
-                            var value = substring.DecodeBase83Integer();
-                            coefficients[x, y] = DecodeDc(value);
-                        }
-                        else
-                        {
-                            var substring = blurhash.Substring(4 + i * 2, 2);
-                            var value = substring.DecodeBase83Integer();
-                            coefficients[x, y] = DecodeAc(value, maximumValue * punch);
-                        }
 
-                        i++;
-                    }
+            var componentIndex = 0;
+            for (var yComponent = 0; yComponent < componentsY; yComponent++)
+            for (var xComponent = 0; xComponent < componentsX; xComponent++)
+            {
+                if (xComponent == 0 && yComponent == 0)
+                {
+                    var value = blurhashSpan.Slice(2, 4).DecodeBase83();
+                    coefficients[xComponent, yComponent] = DecodeDc(value);
                 }
+                else
+                {
+                    var value = blurhashSpan.Slice(4 + componentIndex * 2, 2).DecodeBase83();
+                    coefficients[xComponent, yComponent] = DecodeAc(value, maximumValue * punch);
+                }
+
+                componentIndex++;
             }
 
-            var pixels = new Pixel[outputWidth, outputHeight];
-            var pixelCount = outputHeight * outputWidth;
-            var currentPixel = 0;
-
-            var coordinates = Enumerable.Range(0, outputWidth)
-                .SelectMany(x => Enumerable.Range(0, outputHeight).Select(y => new Coordinate(x, y)))
-                .ToArray();
-
-            var locker = new object();
-            Parallel.ForEach(coordinates,
-                (coordinate) =>
-                {
-                    pixels[coordinate.X, coordinate.Y] = DecodePixel(componentsY, componentsX, coordinate.X, coordinate.Y, outputWidth, outputHeight, coefficients);
-
-                    lock (locker)
-                    {
-                        ProgressCallback?.Invoke((double) currentPixel / pixelCount);
-                        currentPixel++;
-                    }
-                });
- 
-            return pixels;
-        }
-
-        private Pixel DecodePixel(
-            int componentsY, int componentsX, 
-            int x, int y,
-            int width, int height,
-            Pixel[,] coefficients)
-        {
-            var r = 0.0;
-            var g = 0.0;
-            var b = 0.0;
-
-            for (var j = 0; j < componentsY; j++)
+            for (var xPixel = 0; xPixel < outputWidth; xPixel++)
+            for (var yPixel = 0; yPixel < outputHeight; yPixel++)
             {
-                for (var i = 0; i < componentsX; i++)
-                {
-                    var basis = Math.Cos((Math.PI * x * i) / width) * Math.Cos((Math.PI * y * j) / height);
-                    var coefficient = coefficients[i, j];
-                    r += coefficient.Red * basis;
-                    g += coefficient.Green * basis;
-                    b += coefficient.Blue * basis;
-                }
+                ref var result = ref pixels[xPixel, yPixel];
+
+                result.Red = 0.0;
+                result.Green = 0.0;
+                result.Blue = 0.0;
             }
 
-            var result = new Pixel(r, g, b);
-            return result;
+            var xCosines = new double[outputWidth];
+            var yCosines = new double[outputHeight];
+
+            componentIndex = 1;
+            for (var componentX = 0; componentX < componentsX; componentX++)
+            for (var componentY = 0; componentY < componentsY; componentY++)
+            {
+                for (var xPixel = 0; xPixel < outputWidth; xPixel++)
+                {
+                    xCosines[xPixel] = Math.Cos((Math.PI * xPixel * componentX) / outputWidth);
+                }
+
+                for (var yPixel = 0; yPixel < outputHeight; yPixel++)
+                {
+                    yCosines[yPixel] = Math.Cos((Math.PI * yPixel * componentY) / outputHeight);
+                }
+
+                var coefficient = coefficients[componentX, componentY];
+
+                for (var xPixel = 0; xPixel < outputWidth; xPixel++)
+                for (var yPixel = 0; yPixel < outputHeight; yPixel++)
+                {
+                    ref var result = ref pixels[xPixel, yPixel];
+
+                    var basis = xCosines[xPixel] * yCosines[yPixel];
+
+                    result.Red += coefficient.Red * basis;
+                    result.Green += coefficient.Green * basis;
+                    result.Blue += coefficient.Blue * basis;
+                }
+
+                ProgressCallback?.Invoke((double) componentIndex / componentCount);
+                componentIndex++;
+            }
         }
 
         private static Pixel DecodeDc(BigInteger value)
