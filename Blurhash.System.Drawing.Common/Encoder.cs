@@ -1,6 +1,4 @@
 ﻿using System.Drawing.Imaging;
-using System.Linq;
-using System.Threading.Tasks;
 using Blurhash.Core;
 
 // ReSharper disable once CheckNamespace Justification: Meant to extend the System.Drawing.Common-Namespace
@@ -27,7 +25,7 @@ namespace System.Drawing.Common.Blurhash
         /// Converts the given bitmap to the library-independent representation used within the Blurhash-core
         /// </summary>
         /// <param name="sourceBitmap">The bitmap to encode</param>
-        public static Pixel[,] ConvertBitmap(Bitmap sourceBitmap)
+        public static unsafe Pixel[,] ConvertBitmap(Image sourceBitmap)
         {
             var width = sourceBitmap.Width;
             var height = sourceBitmap.Height;
@@ -45,27 +43,21 @@ namespace System.Drawing.Common.Blurhash
                 // Get the address of the first line.
                 var ptr = bmpData.Scan0;
 
-                // Declare an array to hold the bytes of the bitmap.
-                var bytes  = Math.Abs(bmpData.Stride) * height;
-                var rgbValues = new byte[bytes];
-
-                // Copy the RGB values into the array.
-                Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
-
                 var result = new Pixel[width, height];
 
-                Parallel.ForEach(Enumerable.Range(0, height), y =>
+                byte* rgb = (byte*)ptr.ToPointer();
+                for (var y = 0; y < height; y++)
                 {
                     var index = bmpData.Stride * y;
 
                     for (var x = 0; x < width; x++)
                     {
-                        result[x, y].Red = MathUtils.SRgbToLinear(rgbValues[index + 2]);
-                        result[x, y].Green = MathUtils.SRgbToLinear(rgbValues[index + 1]);
-                        result[x, y].Blue = MathUtils.SRgbToLinear(rgbValues[index]);
-                        index += 3;
+                        ref var res = ref result[x, y];
+                        res.Blue = MathUtils.SRgbToLinear(rgb[index++]);
+                        res.Green = MathUtils.SRgbToLinear(rgb[index++]);
+                        res.Red = MathUtils.SRgbToLinear(rgb[index++]);
                     }
-                });
+                }
 
                 temporaryBitmap.UnlockBits(bmpData);
 

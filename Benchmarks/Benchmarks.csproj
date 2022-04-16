@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BenchmarkDotNet" Version="0.13.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Blurhash.Core.Test\Blurhash.Core.Test.csproj" />
+      <ProjectReference Include="..\Blurhash.System.Drawing.Common.Test\Blurhash.System.Drawing.Common.Test.csproj" />
+      <ProjectReference Include="..\Blurhash.System.Drawing.Common\Blurhash.System.Drawing.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Samples\flower.jpg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

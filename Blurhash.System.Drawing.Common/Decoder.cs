@@ -1,5 +1,4 @@
 ﻿using System.Drawing.Imaging;
-using System.Linq;
 using Blurhash.Core;
 
 // ReSharper disable once CheckNamespace Justification: Meant to extend the System.Drawing.Common-Namespace
@@ -20,7 +19,8 @@ namespace System.Drawing.Common.Blurhash
         /// <returns>The decoded preview</returns>
         public Image Decode(string blurhash, int outputWidth, int outputHeight, double punch = 1.0)
         {
-            var pixelData = base.CoreDecode(blurhash, outputWidth, outputHeight, punch);
+            var pixelData = new Pixel[outputWidth, outputHeight];
+            CoreDecode(blurhash, pixelData, punch);
             return ConvertToBitmap(pixelData);
         }
 
@@ -34,15 +34,19 @@ namespace System.Drawing.Common.Blurhash
             var width = pixelData.GetLength(0);
             var height = pixelData.GetLength(1);
 
-            var data = Enumerable.Range(0, height)
-                .SelectMany(y => Enumerable.Range(0, width).Select(x => (x, y)))
-                .Select(tuple => pixelData[tuple.x, tuple.y])
-                .SelectMany(pixel => new byte[]
-                {
-                    (byte) MathUtils.LinearTosRgb(pixel.Blue), (byte) MathUtils.LinearTosRgb(pixel.Green),
-                    (byte) MathUtils.LinearTosRgb(pixel.Red), 0
-                })
-                .ToArray();
+            var data = new byte[width * height * 4];
+
+            var index = 0;
+            for (var yPixel = 0; yPixel < height; yPixel++)
+            for (var xPixel = 0; xPixel < width; xPixel++)
+            {
+                var pixel = pixelData[xPixel, yPixel];
+
+                data[index++] = (byte)MathUtils.LinearTosRgb(pixel.Blue);
+                data[index++] = (byte)MathUtils.LinearTosRgb(pixel.Green);
+                data[index++] = (byte)MathUtils.LinearTosRgb(pixel.Red);
+                data[index++] = 0;
+            }
 
             Bitmap bmp;
 
