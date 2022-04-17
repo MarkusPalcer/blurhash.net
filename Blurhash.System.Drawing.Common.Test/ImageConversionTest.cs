@@ -1,13 +1,14 @@
-﻿using System.Drawing.Blurhash.DotNetFramework.Test;
+﻿using System.Drawing.Blurhash;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
 
 // ReSharper disable once CheckNamespace Justification: Meant to extend the System.Drawing.Common-Namespace
-namespace System.Drawing.Common.Blurhash
+namespace System.Drawing.Common
 {
     public class ImageConversionTest
     {
@@ -24,7 +25,7 @@ namespace System.Drawing.Common.Blurhash
                     sourceImage.SetPixel(x, y, Color.FromArgb(rnd.Next(0, 2) * 255, rnd.Next(0, 2) * 255, rnd.Next(0, 2) * 255));
                 }
 
-            var sourceData = Encoder.ConvertBitmap(sourceImage);
+            var sourceData = Blurhasher.ConvertBitmap(sourceImage);
 
             for (var x = 0; x < 20; x++)
             for (var y = 0; y < 20; y++)
@@ -36,7 +37,7 @@ namespace System.Drawing.Common.Blurhash
                 sourceData[x, y].Blue.Should().BeApproximately(pixel.B == 0 ? 0.0 : 1.0, double.Epsilon);
             }
 
-            var targetImage = Decoder.ConvertToBitmap(sourceData);
+            var targetImage = Blurhasher.ConvertToBitmap(sourceData);
 
             for (var x = 0; x < 20; x++)
             for (var y = 0; y < 20; y++)
@@ -58,7 +59,7 @@ namespace System.Drawing.Common.Blurhash
                 sourceImage.SetPixel(x, y, Color.FromArgb(rnd.Next(0, 2) * 255, rnd.Next(0, 2) * 255, rnd.Next(0, 2) * 255));
             }
 
-            var sourceData = Encoder.ConvertBitmap(sourceImage);
+            var sourceData = Blurhasher.ConvertBitmap(sourceImage);
 
             for (var x = 0; x < 20; x++)
             for (var y = 0; y < 20; y++)
@@ -70,7 +71,7 @@ namespace System.Drawing.Common.Blurhash
                 sourceData[x, y].Blue.Should().BeApproximately(pixel.B == 0 ? 0.0 : 1.0, double.Epsilon);
             }
 
-            var targetImage = Decoder.ConvertToBitmap(sourceData);
+            var targetImage = Blurhasher.ConvertToBitmap(sourceData);
 
             for (var x = 0; x < 20; x++)
             for (var y = 0; y < 20; y++)
@@ -84,13 +85,12 @@ namespace System.Drawing.Common.Blurhash
         {
             var img = Image.FromFile("TestData\\input.jpg");
 
-            var encoder = new Encoder();
 
             using (var scope = new AssertionScope()) {
                 foreach (var x in Enumerable.Range(1, 9))
                 foreach (var y in Enumerable.Range(1, 9))
                 {
-                    var hash = encoder.Encode(img, x, y);
+                    var hash = Blurhasher.Encode(img, x, y);
                     hash.Should().Be(ImageConversionTestCases.ExpectedHashes[(x, y)], $" the hash for {x} by {y} components should be correct");
                 }
             }
@@ -99,12 +99,10 @@ namespace System.Drawing.Common.Blurhash
         [Fact]
         public void TestDecoding()
         {
-            var decoder = new Decoder();
-
             foreach (var componentsX in Enumerable.Range(1, 9))
             foreach (var componentsY in Enumerable.Range(1, 9))
             {
-                using (var actualImage = (Bitmap)decoder.Decode(ImageConversionTestCases.ExpectedHashes[(componentsX, componentsY)], 300, 190))
+                using (var actualImage = (Bitmap)Blurhasher.Decode(ImageConversionTestCases.ExpectedHashes[(componentsX, componentsY)], 300, 190))
                 using (var expectedStream = new FileStream($"TestData\\{componentsX}x{componentsY}.png", FileMode.Open))
                 using (var actualStream = new MemoryStream())
                 {

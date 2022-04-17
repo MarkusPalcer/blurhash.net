@@ -1,21 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <!-- This should be in sync with the TFMs of System.Drawing.Common -->
-        <TargetFrameworks>net472;net5.0;netstandard2.0</TargetFrameworks>
+        <TargetFrameworks>net461;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
 
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-
-        <PackageId>Blurhash.System.Drawing.Common</PackageId>
-        <PackageVersion>2.2.0</PackageVersion>
+        <PackageId>Blurhash.Microsoft.Extensions.Core</PackageId>
+        <PackageVersion>2.0.0</PackageVersion>
         <Authors>Markus Palcer</Authors>
-        <Description>BlurHash is a compact representation of a placeholder for an image.</Description>
+        <Description>A means to register the blurhash core to the .NET Core DI-Container</Description>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
         <Copyright>Copyright 2019 Markus Palcer</Copyright>
         <PackageTags>blurhash image preview compression encoding</PackageTags>
         <PackageProjectUrl>https://github.com/MarkusPalcer/blurhash.net</PackageProjectUrl>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <RootNamespace>System.Drawing.Blurhash</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -23,7 +19,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+      <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
     </ItemGroup>
 
 </Project>

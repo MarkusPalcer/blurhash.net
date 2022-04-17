@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Blurhash.Core
+namespace Blurhash
 {
     /// <summary>
     /// Utility methods for mathematical calculations

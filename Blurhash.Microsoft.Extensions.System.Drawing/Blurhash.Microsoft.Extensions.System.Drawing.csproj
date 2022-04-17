@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net461;net6.0;netstandard2.0;netstandard2.1</TargetFrameworks>
+
+        <PackageId>Blurhash.Microsoft.Extensions.System.Drawing</PackageId>
+        <PackageVersion>2.0.0</PackageVersion>
+        <Authors>Markus Palcer</Authors>
+        <Description>A means to register the blurhash core to the .NET Core DI-Container</Description>
+        <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+        <Copyright>Copyright 2019 Markus Palcer</Copyright>
+        <PackageTags>blurhash image preview compression encoding</PackageTags>
+        <PackageProjectUrl>https://github.com/MarkusPalcer/blurhash.net</PackageProjectUrl>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Blurhash.Microsoft.Extensions.Core\Blurhash.Microsoft.Extensions.Core.csproj" />
+      <ProjectReference Include="..\Blurhash.System.Drawing.Common\Blurhash.System.Drawing.Common.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Drawing.Common" Version="5.0.0" />
+    </ItemGroup>
+</Project>

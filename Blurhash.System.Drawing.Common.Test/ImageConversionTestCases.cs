@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace System.Drawing.Blurhash.DotNetFramework.Test
+namespace System.Drawing.Blurhash
 {
     public class ImageConversionTestCases
     {

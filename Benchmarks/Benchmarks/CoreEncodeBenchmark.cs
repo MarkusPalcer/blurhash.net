@@ -1,20 +1,18 @@
 using System.Drawing;
+using System.Drawing.Blurhash;
 using BenchmarkDotNet.Attributes;
-using System.Drawing.Common.Blurhash;
-using Benchmarks.Helpers;
-using Blurhash.Core;
+using Blurhash;
 
-namespace Benchmarks;
+namespace Benchmarks.Benchmarks;
 
 [MemoryDiagnoser]
 public class CoreEncodeBenchmark
 {
-    public static readonly Pixel[,] SampleImage = Encoder.ConvertBitmap(new Bitmap(Image.FromFile("Samples\\flower.jpg")));
+    private static readonly Pixel[,] SampleImage = Blurhasher.ConvertBitmap(new Bitmap(Image.FromFile("Samples\\flower.jpg")));
 
     [Benchmark(Baseline = true)]
     public void Original()
     {
-        var encoder = new CoreEncoderHelper();
-        var result = encoder.Encode(SampleImage, 9, 9);
+        var _ = Core.Encode(SampleImage, 9, 9);
     }
 }

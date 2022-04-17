@@ -1,4 +1,4 @@
-namespace Blurhash.Core.Test
+namespace Blurhash.Tests
 {
     public class TestData
     {
