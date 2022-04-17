@@ -22,11 +22,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.ImageSharp", "Blur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.Core.Test", "Blurhash.Core.Test\Blurhash.Core.Test.csproj", "{C6EE540A-A8BA-49DA-915E-5E919F88C302}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.System.Drawing", "Blurhash.System.Drawing\Blurhash.System.Drawing.csproj", "{F7A7935F-00ED-4B20-BEF0-9DDABC527035}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.System.Drawing.Test", "Blurhash.System.Drawing.Test\Blurhash.System.Drawing.Test.csproj", "{6F67B1E3-25A0-418F-A451-C6EE8388463B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.System.Drawing.Common", "Blurhash.System.Drawing.Common\Blurhash.System.Drawing.Common.csproj", "{4924E9C0-4F56-421D-81CB-D1774A945053}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blurhash.System.Drawing.Common", "Blurhash.System.Drawing.Common\Blurhash.System.Drawing.Common.csproj", "{4924E9C0-4F56-421D-81CB-D1774A945053}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blurhash.System.Drawing.Common.Test", "Blurhash.System.Drawing.Common.Test\Blurhash.System.Drawing.Common.Test.csproj", "{909752D6-4CBF-4E3D-906F-F8A9AAD3BB48}"
