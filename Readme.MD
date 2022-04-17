@@ -70,6 +70,10 @@ Install the NuGet-Package `Blurhash.Core` (add `Blurhash.Microsoft.Extensions.Co
 Think about sharing your implementation, so others can use it too. \
 Calling it `Blurhash.<Name of your image manipulation library>` would help others to quickly find it on NuGet.org.
 
+## Versioning
+
+Blurhash.NET uses Semantic Versioning (as explained https://semver.org)
+
 ## Projects in this solution
 This list does not contain the projects with names ending in `.Test` as they are the test projects for the ones listed here.
 
