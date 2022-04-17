@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netstandard1.2</TargetFramework>
     
-    <PackageId>Blurhash</PackageId>
+    <PackageId>Blurhash.Core</PackageId>
     <PackageVersion>2.0.0</PackageVersion>
     <Authors>Markus Palcer</Authors>
     <Description>BlurHash is a compact representation of a placeholder for an image.</Description>
