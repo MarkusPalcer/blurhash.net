@@ -1,10 +1,8 @@
 using System.Drawing;
 using BenchmarkDotNet.Attributes;
-using Benchmarks.Helpers;
-using Blurhash.Core;
-using Blurhash.Core.Test;
+using Blurhash;
 
-namespace Benchmarks;
+namespace Benchmarks.Benchmarks;
 
 [MemoryDiagnoser]
 public class CoreDecodeBenchmark
@@ -22,9 +20,6 @@ public class CoreDecodeBenchmark
     [Benchmark(Baseline = true)]
     public void Original()
     {
-        var decoder = new CoreDecoderHelper();
-        decoder.Decode(
-            TestData.Data.First(x => x.ComponentsX == 9 && x.ComponentsY == 9).Hash,
-            pixels);
+        Core.Decode(Blurhash.Tests.TestData.Data.First(x => x.ComponentsX == 9 && x.ComponentsY == 9).Hash, pixels);
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Blurhash.Core
+﻿namespace Blurhash
 {
     /// <summary>
     /// Represents a pixel within the Blurhash algorithm

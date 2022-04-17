@@ -2,7 +2,7 @@
 using FluentAssertions;
 using Xunit;
 
-namespace Blurhash.Core.Test
+namespace Blurhash.Tests
 {
     public class Base83Test
     {

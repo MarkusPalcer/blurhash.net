@@ -1,5 +1,6 @@
 ﻿using BenchmarkDotNet.Running;
 using Benchmarks;
+using Benchmarks.Benchmarks;
 
 // BenchmarkRunner.Run<FullStackEncodeBenchmark>();
 // BenchmarkRunner.Run<FullStackDecodeBenchmark>();

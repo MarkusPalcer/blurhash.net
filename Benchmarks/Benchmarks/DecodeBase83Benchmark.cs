@@ -1,12 +1,12 @@
 using BenchmarkDotNet.Attributes;
-using Blurhash.Core;
+using Blurhash;
 
-namespace Benchmarks;
+namespace Benchmarks.Benchmarks;
 
 [MemoryDiagnoser]
 public class DecodeBase83Benchmark
 {
-    private string stringData;
+    private string stringData = null!;
 
     [GlobalSetup]
     public void Setup()
@@ -17,6 +17,6 @@ public class DecodeBase83Benchmark
     [Benchmark(Baseline = true)]
     public void Original()
     {
-        Base83.DecodeBase83(stringData.AsSpan().Slice(2,2));
+        stringData.AsSpan().Slice(2,2).DecodeBase83();
     }
 }

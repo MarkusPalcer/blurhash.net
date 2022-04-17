@@ -1,5 +1,5 @@
 using System.Drawing;
-using System.Drawing.Common.Blurhash;
+using System.Drawing.Blurhash;
 using BenchmarkDotNet.Attributes;
 
 [MemoryDiagnoser()]
@@ -10,6 +10,6 @@ public class EncoderConvertBitmapBenchmark
     [Benchmark]
     public void Benchmark()
     {
-        Encoder.ConvertBitmap(SampleImage);
+        Blurhasher.ConvertBitmap(SampleImage);
     }
 }

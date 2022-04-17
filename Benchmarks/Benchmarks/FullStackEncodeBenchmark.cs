@@ -1,18 +1,17 @@
 using System.Drawing;
-using System.Drawing.Common.Blurhash;
+using System.Drawing.Blurhash;
 using BenchmarkDotNet.Attributes;
 
-namespace Benchmarks;
+namespace Benchmarks.Benchmarks;
 
 [MemoryDiagnoser]
 public class FullStackEncodeBenchmark
 {
-    public static readonly Image SampleImage = Image.FromFile("Samples\\flower.jpg");
+    private static readonly Image SampleImage = Image.FromFile("Samples\\flower.jpg");
 
     [Benchmark(Baseline = true)]
     public void Original()
     {
-        var encoder = new Encoder();
-        var result = encoder.Encode(SampleImage, 9, 9);
+        var _ = Blurhasher.Encode(SampleImage, 9, 9);
     }
 }
