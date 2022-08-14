@@ -4,14 +4,14 @@ on: pull_request
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2.3.3
-      - name: Restore packages
-        run: nuget restore
-      - name: Build
-        run: dotnet build
-      - name: Test
-        run: dotnet test --no-build --verbosity normal
+      - name: Build DotNet
+        uses: Elskom/build-dotnet@v1.1.1
+        with:
+          RESTORE: true
+          TEST: true
+          PACK: false
 
