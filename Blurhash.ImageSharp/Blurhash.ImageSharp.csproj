@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <!-- This should be in sync with the TFMs of SixLabors.ImageSharp -->
-        <TargetFrameworks>netcoreapp2.1;netcoreapp3.1;netstandard2.0;netstandard2.1</TargetFrameworks>
+        <TargetFrameworks>net6.0</TargetFrameworks>
 
         <PackageId>Blurhash.ImageSharp</PackageId>
         <PackageVersion>3.0.0</PackageVersion>
@@ -20,7 +20,7 @@
     </ItemGroup>
             
     <ItemGroup>
-        <PackageReference Include="SixLabors.ImageSharp" Version="2.0.0" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.3" />
     </ItemGroup>
 
 </Project>
