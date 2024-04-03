@@ -4,7 +4,7 @@
         <TargetFrameworks>net6.0</TargetFrameworks>
 
         <PackageId>Blurhash.Microsoft.Extensions.System.Drawing</PackageId>
-        <PackageVersion>2.0.0</PackageVersion>
+        <PackageVersion>4.0.0</PackageVersion>
         <Authors>Markus Palcer</Authors>
         <Description>A means to register the blurhash core to the .NET Core DI-Container</Description>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>

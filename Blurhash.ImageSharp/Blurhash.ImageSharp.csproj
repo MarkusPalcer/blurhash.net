@@ -5,7 +5,7 @@
         <TargetFrameworks>net6.0</TargetFrameworks>
 
         <PackageId>Blurhash.ImageSharp</PackageId>
-        <PackageVersion>3.0.0</PackageVersion>
+        <PackageVersion>4.0.0</PackageVersion>
         <Authors>Markus Palcer</Authors>
         <Description>BlurHash is a compact representation of a placeholder for an image.</Description>
         <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
