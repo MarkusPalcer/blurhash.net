@@ -2,6 +2,7 @@
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Runtime.Versioning;
 using System.Text;
 using FluentAssertions;
 using FluentAssertions.Execution;
@@ -10,9 +11,10 @@ using Xunit;
 // ReSharper disable once CheckNamespace Justification: Meant to extend the System.Drawing.Common-Namespace
 namespace System.Drawing.Common
 {
+    [SupportedOSPlatform("Windows")]
     public class ImageConversionTest
     {
-        [Fact]
+        [SkippableFact]
         public void TestConversion24BppRgb()
         {
             var rnd = new Random();
@@ -46,7 +48,7 @@ namespace System.Drawing.Common
             }
         }
 
-        [Fact]
+        [SkippableFact]
         public void TestConversion32BppRgb()
         {
             var rnd = new Random();
@@ -80,7 +82,7 @@ namespace System.Drawing.Common
             }
         }
 
-        [Fact]
+        [SkippableFact]
         public void TestEncoding()
         {
             var img = Image.FromFile("TestData\\input.jpg");
@@ -96,7 +98,7 @@ namespace System.Drawing.Common
             }
         }
 
-        [Fact]
+        [SkippableFact]
         public void TestDecoding()
         {
             foreach (var componentsX in Enumerable.Range(1, 9))
