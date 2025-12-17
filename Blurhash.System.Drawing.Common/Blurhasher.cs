@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Drawing.Imaging;
 using Blurhash;
 
@@ -5,6 +6,7 @@ namespace System.Drawing.Blurhash
 {
     public static class Blurhasher
     {
+        
         /// <summary>
         /// Encodes a picture into a Blurhash string
         /// </summary>
@@ -12,6 +14,7 @@ namespace System.Drawing.Blurhash
         /// <param name="componentsX">The number of components used on the X-Axis for the DCT</param>
         /// <param name="componentsY">The number of components used on the Y-Axis for the DCT</param>
         /// <returns>The resulting Blurhash string</returns>
+        [ExcludeFromCodeCoverage(Justification = "Testing this would only test the constructor of System.Drawing.Bitmap and we trust the .NET-framework")]
         public static string Encode(Image image, int componentsX, int componentsY)
         {
             return Core.Encode(ConvertBitmap(image as Bitmap ?? new Bitmap(image)), componentsX, componentsY);
@@ -25,6 +28,7 @@ namespace System.Drawing.Blurhash
         /// <param name="outputHeight">The desired height of the output in pixels</param>
         /// <param name="punch">A value that affects the contrast of the decoded image. 1 means normal, smaller values will make the effect more subtle, and larger values will make it stronger.</param>
         /// <returns>The decoded preview</returns>
+        [ExcludeFromCodeCoverage]
         public static Image Decode(string blurhash, int outputWidth, int outputHeight, double punch = 1.0)
         {
             var pixelData = new Pixel[outputWidth, outputHeight];
