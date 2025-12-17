@@ -22,7 +22,7 @@ namespace Blurhash.ImageSharp.Test
             using var resultStream = new BinaryReader(ms);
             var resultBytes = resultStream.ReadBytes((int)ms.Length);
 
-            await using var expectation = File.OpenRead(@"Resources\Expectations\BlurResult1.png");
+            await using var expectation = File.OpenRead(Path.Combine("Resources", "Expectations", "BlurResult1.png"));
             using var fileStream = new BinaryReader(expectation);
             var actualBytes = fileStream.ReadBytes((int)expectation.Length);
 
@@ -32,7 +32,7 @@ namespace Blurhash.ImageSharp.Test
         [Fact]
         public async Task EncodingTests()
         {
-            var sourceImage = await Image.LoadAsync<Rgba32>(@"Resources\Specimens\Sample.png");
+            var sourceImage = await Image.LoadAsync<Rgba32>(Path.Combine("Resources", "Specimens", "Sample.png"));
 
             var result = Blurhasher.Encode(sourceImage, 9, 9);
 
