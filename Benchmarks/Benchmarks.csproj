@@ -9,23 +9,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="BenchmarkDotNet" Version="0.13.12" />
+      <PackageReference Include="BenchmarkDotNet" Version="0.15.8" />
+      <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Blurhash.Core.Test\Blurhash.Core.Test.csproj" />
-      <ProjectReference Include="..\Blurhash.System.Drawing.Common.Test\Blurhash.System.Drawing.Common.Test.csproj" />
-      <ProjectReference Include="..\Blurhash.System.Drawing.Common\Blurhash.System.Drawing.Common.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <None Update="Samples\flower.jpg">
+      <None Update="Samples\testImage.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Benchmarks\" />
+      <ProjectReference Include="..\Blurhash.Core\Blurhash.Core.csproj" />
     </ItemGroup>
 
 </Project>
