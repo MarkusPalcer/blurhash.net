@@ -28,7 +28,7 @@ public class LargeImageEncoder
     /// <remarks>
     /// <b>Important:</b> The <c>LargeImageEncoder</c> class does not check if you provided all pixels or sent duplicate pixels. If you do so, your blurhash string will be wrong.
     /// </remarks>
-    public LargeImageEncoder(int componentsX, int componentsY, int width, int height, IProgress<int>? progressCallback)
+    public LargeImageEncoder(int componentsX, int componentsY, int width, int height, IProgress<int>? progressCallback = null)
     {
         if (componentsX < 1) throw new ArgumentException("componentsX needs to be at least 1");
         if (componentsX > 9) throw new ArgumentException("componentsX needs to be at most 9");
@@ -59,27 +59,6 @@ public class LargeImageEncoder
                 yCosines[yComponent * height + yPixel] = Math.Cos(Math.PI * yComponent * yPixel / height);
             }
         }
-    }
-
-    /// <summary>
-    /// Encodes a 2-dimensional array of pixels into a Blurhash string
-    /// </summary>
-    /// <param name="pixels">The 2-dimensional array of pixels to encode</param>
-    /// <param name="componentsX">The number of components used on the X-Axis for the DCT</param>
-    /// <param name="componentsY">The number of components used on the Y-Axis for the DCT</param>
-    /// <param name="progressCallback">An optional progress handler to receive progress updates</param>
-    /// <returns>The resulting Blurhash string</returns>
-    public static string Encode(Pixel[,] pixels,
-        int componentsX,
-        int componentsY,
-        IProgress<int>? progressCallback = null)
-    {
-        var width = pixels.GetLength(0);
-        var height = pixels.GetLength(1);
-
-        var encoder = new LargeImageEncoder(componentsX, componentsY, width, height, progressCallback);
-
-        return encoder.Encode(pixels);
     }
 
     public void AddPixels(Span<StreamedPixel> pixels)
@@ -162,22 +141,5 @@ public class LargeImageEncoder
         }
 
         return resultBuffer.AsSpan().ToString();
-    }
-    
-    public string Encode(Pixel[,] pixels)
-    {
-        Span<StreamedPixel> pixelBuffer = stackalloc StreamedPixel[height];
-        for (var xPixel = 0; xPixel < width; xPixel++)
-        {
-            for (var yPixel = 0; yPixel < height; yPixel++)
-            {
-                var pixel = pixels[xPixel, yPixel];
-                pixelBuffer[yPixel] = new StreamedPixel(pixel.Red, pixel.Green, pixel.Blue, xPixel, yPixel);
-            }
-            
-            AddPixels(pixelBuffer);
-        }
-
-        return Finish();
     }
 }
