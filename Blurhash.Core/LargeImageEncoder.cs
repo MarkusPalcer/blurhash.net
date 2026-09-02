@@ -83,29 +83,28 @@ public class LargeImageEncoder
 
     public string Encode(Pixel[,] pixels)
     {
-        for (var yComponent = 0; yComponent < componentsY; yComponent++)
-        for (var xComponent = 0; xComponent < componentsX; xComponent++)
+        for (var xPixel = 0; xPixel < width; xPixel++)
+        for (var yPixel = 0; yPixel < height; yPixel++)
         {
-            double r = 0, g = 0, b = 0;
-            double normalization = (xComponent == 0 && yComponent == 0) ? 1 : 2;
-
-            for (var xPixel = 0; xPixel < width; xPixel++)
-            for (var yPixel = 0; yPixel < height; yPixel++)
+            for (var yComponent = 0; yComponent < componentsY; yComponent++)
+            for (var xComponent = 0; xComponent < componentsX; xComponent++)
             {
+                double normalization = (xComponent == 0 && yComponent == 0) ? 1 : 2;
+                var scale = normalization / (width * height);
+
                 var basis = xCosines[xComponent * width + xPixel] * yCosines[yComponent * height + yPixel];
                 var pixel = pixels[xPixel, yPixel];
-                r += basis * pixel.Red;
-                g += basis * pixel.Green;
-                b += basis * pixel.Blue;
+                var r = basis * pixel.Red;
+                var g = basis * pixel.Green;
+                var b = basis * pixel.Blue;
+
+                factors[componentsX * yComponent + xComponent].Red += r * scale;
+                factors[componentsX * yComponent + xComponent].Green += g * scale;
+                factors[componentsX * yComponent + xComponent].Blue += b * scale;
+
+                // progressCallback?.Report(processedFactors * 100 / factorCount1);
+                // processedFactors++;
             }
-
-            var scale = normalization / (width * height);
-            factors[componentsX * yComponent + xComponent].Red = r * scale;
-            factors[componentsX * yComponent + xComponent].Green = g * scale;
-            factors[componentsX * yComponent + xComponent].Blue = b * scale;
-
-            // progressCallback?.Report(processedFactors * 100 / factorCount1);
-            // processedFactors++;
         }
 
         var dc = factors[0];
