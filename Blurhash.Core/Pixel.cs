@@ -9,3 +9,5 @@ public struct Pixel(double red, double green, double blue)
     public double Green = green;
     public double Blue = blue;
 }
+
+public record struct StreamedPixel(double Red, double Green, double Blue, int X, int Y);
