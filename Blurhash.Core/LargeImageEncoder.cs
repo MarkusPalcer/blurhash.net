@@ -110,21 +110,9 @@ public class LargeImageEncoder
             }
         }
     }
-    
-    public string Encode(Pixel[,] pixels)
-    {
-        Span<StreamedPixel> pixelBuffer = stackalloc StreamedPixel[height];
-        for (var xPixel = 0; xPixel < width; xPixel++)
-        {
-            for (var yPixel = 0; yPixel < height; yPixel++)
-            {
-                var pixel = pixels[xPixel, yPixel];
-                pixelBuffer[yPixel] = new StreamedPixel(pixel.Red, pixel.Green, pixel.Blue, xPixel, yPixel);
-            }
-            
-            AddPixels(pixelBuffer);
-        }
 
+    public string Finish()
+    {
         var dc = factors[0];
         var acCount = componentsX * componentsY - 1;
 
@@ -174,5 +162,22 @@ public class LargeImageEncoder
         }
 
         return resultBuffer.AsSpan().ToString();
+    }
+    
+    public string Encode(Pixel[,] pixels)
+    {
+        Span<StreamedPixel> pixelBuffer = stackalloc StreamedPixel[height];
+        for (var xPixel = 0; xPixel < width; xPixel++)
+        {
+            for (var yPixel = 0; yPixel < height; yPixel++)
+            {
+                var pixel = pixels[xPixel, yPixel];
+                pixelBuffer[yPixel] = new StreamedPixel(pixel.Red, pixel.Green, pixel.Blue, xPixel, yPixel);
+            }
+            
+            AddPixels(pixelBuffer);
+        }
+
+        return Finish();
     }
 }
