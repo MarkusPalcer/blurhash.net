@@ -6,7 +6,7 @@ using Xunit;
 
 namespace Blurhash.Tests;
 
-public class LargeImageEncoderTests
+public class StreamedEncoderTests
 {
     [Fact]
     public void Encode()
@@ -15,7 +15,7 @@ public class LargeImageEncoderTests
         var width = pixels.GetLength(0);
         var height = pixels.GetLength(1);
 
-        var encoder = new LargeImageEncoder(9, 9, width, height);
+        var encoder = new StreamedEncoder(9, 9, width, height);
 
         Span<StreamedPixel> pixelBuffer = stackalloc StreamedPixel[height];
         for (var xPixel = 0; xPixel < width; xPixel++)

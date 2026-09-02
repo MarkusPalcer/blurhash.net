@@ -8,7 +8,7 @@ namespace Blurhash;
 /// <remarks>
 /// <b>Important:</b> The <c>LargeImageEncoder</c> class does not check if you provided all pixels or sent duplicate pixels. If you do so, your blurhash string will be wrong.
 /// </remarks>
-public class LargeImageEncoder
+public class StreamedEncoder
 {
     private readonly int componentsX;
     private readonly int componentsY;
@@ -28,7 +28,7 @@ public class LargeImageEncoder
     /// <remarks>
     /// <b>Important:</b> The <c>LargeImageEncoder</c> class does not check if you provided all pixels or sent duplicate pixels. If you do so, your blurhash string will be wrong.
     /// </remarks>
-    public LargeImageEncoder(int componentsX, int componentsY, int width, int height, IProgress<int>? progressCallback = null)
+    public StreamedEncoder(int componentsX, int componentsY, int width, int height, IProgress<int>? progressCallback = null)
     {
         if (componentsX < 1) throw new ArgumentException("componentsX needs to be at least 1");
         if (componentsX > 9) throw new ArgumentException("componentsX needs to be at most 9");
