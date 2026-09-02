@@ -26,7 +26,7 @@ public class StreamedEncoderTests
                 pixelBuffer[yPixel] = new StreamedPixel(pixel.Red, pixel.Green, pixel.Blue, xPixel, yPixel);
             }
 
-            encoder.AddPixels(pixelBuffer);
+            encoder.Process(pixelBuffer);
         }
 
         var result = encoder.Finish();
