@@ -15,6 +15,7 @@ public class LargeImageEncoder
     private readonly int width;
     private readonly int height;
     private readonly int size;
+    private int processedPixels;
     private readonly IProgress<int>? progressCallback;
     private readonly Pixel[] factors;
     private readonly char[] resultBuffer;
@@ -102,8 +103,8 @@ public class LargeImageEncoder
                 factors[componentsX * yComponent + xComponent].Green += g * scale;
                 factors[componentsX * yComponent + xComponent].Blue += b * scale;
 
-                // progressCallback?.Report(processedFactors * 100 / factorCount1);
-                // processedFactors++;
+                progressCallback?.Report(processedPixels * 100 / size);
+                processedPixels++;
             }
         }
 
