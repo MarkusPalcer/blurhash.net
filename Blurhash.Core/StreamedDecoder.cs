@@ -5,24 +5,24 @@ namespace Blurhash;
 public class StreamedDecoder
 {
     private readonly string blurhash;
-    
+
     private readonly int outputWidth;
     private readonly int outputHeight;
 
     private int componentsY;
     private int componentsX;
-    
+
     private double maximumValue;
     private Pixel[,] coefficients;
-    
+
     private double[,] xCosines;
     private double[,] yCosines;
 
     private readonly ResultCallback resultCallback;
     private readonly IProgress<int>? progressCallback;
-    
+
     public delegate void ResultCallback(ReadOnlySpan<StreamedPixel> pixels);
-    
+
     public StreamedDecoder(string blurhash,
         int outputWidth,
         int outputHeight,
@@ -34,13 +34,13 @@ public class StreamedDecoder
         {
             throw new ArgumentException("Blurhash value needs to be at least 6 characters", nameof(blurhash));
         }
-        
+
         this.blurhash = blurhash;
         this.outputWidth = outputWidth;
         this.outputHeight = outputHeight;
         this.resultCallback = resultCallback;
         this.progressCallback = progressCallback;
-        
+
         DecodeComponentCount();
         DecodeMaximumValue();
         DecodeCoefficients(punch);
@@ -66,7 +66,7 @@ public class StreamedDecoder
             }
         }
     }
-    
+
     private void DecodeCoefficients(double punch)
     {
         coefficients = new Pixel[componentsX, componentsY];
@@ -108,53 +108,34 @@ public class StreamedDecoder
 
     public void Decode()
     {
-        var pixels = new Pixel[outputWidth, outputHeight];
+        Span<StreamedPixel> pixels = stackalloc StreamedPixel[outputHeight];
 
         for (var xPixel = 0; xPixel < outputWidth; xPixel++)
         for (var yPixel = 0; yPixel < outputHeight; yPixel++)
         {
-            ref var result = ref pixels[xPixel, yPixel];
-
+            ref var result = ref pixels[yPixel];
+            
             result.Red = 0.0;
             result.Green = 0.0;
             result.Blue = 0.0;
-        }
+            result.X = xPixel;
+            result.Y = yPixel;
 
-        for (var componentX = 0; componentX < componentsX; componentX++)
-        for (var componentY = 0; componentY < componentsY; componentY++)
-        {
-            var coefficient = coefficients[componentX, componentY];
-
-            for (var xPixel = 0; xPixel < outputWidth; xPixel++)
-            for (var yPixel = 0; yPixel < outputHeight; yPixel++)
+            for (var componentX = 0; componentX < componentsX; componentX++)
+            for (var componentY = 0; componentY < componentsY; componentY++)
             {
-                ref var result = ref pixels[xPixel, yPixel];
-
-                var basis = xCosines[componentX, xPixel] * yCosines[componentY, yPixel];
-
-                result.Red += coefficient.Red * basis;
-                result.Green += coefficient.Green * basis;
-                result.Blue += coefficient.Blue * basis;
+                var coefficient = coefficients[componentX, componentY];
+                {
+                    var basis = xCosines[componentX, xPixel] * yCosines[componentY, yPixel];
+                    result.Red += coefficient.Red * basis;
+                    result.Green += coefficient.Green * basis;
+                    result.Blue += coefficient.Blue * basis;
+                }
             }
 
-            // progressCallback?.Report(componentIndex * 100 / componentCount);
-            // componentIndex++;
-        }
-        
-        Span<StreamedPixel> buffer = stackalloc StreamedPixel[outputHeight];
-        
-        for (var xPixel = 0; xPixel < outputWidth; xPixel++)
-        {
-            for (var yPixel = 0; yPixel < outputHeight; yPixel++)
-            {
-                buffer[yPixel].Red = pixels[xPixel, yPixel].Red;
-                buffer[yPixel].Green = pixels[xPixel, yPixel].Green;
-                buffer[yPixel].Blue = pixels[xPixel, yPixel].Blue;
-                buffer[yPixel].X = xPixel;
-                buffer[yPixel].Y = yPixel;
-            }
-            
-            resultCallback(buffer);
+            resultCallback(pixels);
+
+            progressCallback?.Report(xPixel * 100 / outputWidth);
         }
     }
 }
