@@ -49,21 +49,46 @@ Go there if you want to see the details on how BlurHash works or how to contribu
    - Install `Blurhash.Microsoft.Extensions.Core` if you want to manually convert your image type for the algorithm  (see below) 
 
 ### Using an unsupported image manipulation library
-Install the NuGet-Package `Blurhash.Core` (add `Blurhash.Microsoft.Extensions.Core` if you want to use dependency injection)
+Install the NuGet-Package `Blurhash.Core` 
 
 #### Encoding an image to a Blurhash string
 
+##### Method 1
+
 1) Write a method to convert an image from your library to a two-dimensional array of `Blurhash.Pixel` where the first dimension is the X-Axis and the second dimension is the Y-Axis
 2) Call `Blurhash.Core.Encode` with your array
-3) Encapsulate this in a static `Encode` method in a Library specific `Blurhasher` class and share your implementation by creating a PullRequest
+3) Encapsulate this in a static `Encode` method in a Library specific `Blurhasher` class and share your implementation by creating a PullRequest, updating this README.md
+
+This method needs you to convert _all_ the pixels of your image into the representation of `Blurhash.Pixel` at once, possibly using up lots of space.
+Instead there is another method which allows you to process the image in chunks.
+
+##### Method 2
+
+1) Create an `StreamedEncoder` instance
+2) Convert a bunch of pixels into `Span<Blurhash.StreamedPixel>` (this could be done on the stack or in a separate thread...) and call `StreamedEncoder.Process` with them. \
+   The difference between `Blurhash.Pixel` is that the `StreamedPixel` also contains the X- and Y- Coordinate of the pixel, so the order in which you process them does not matter.
+3) Call `StreamedEncoder.Finish` to get the Blurhash string
+4) Encapsulate this in a static `Encode` method in a Library specific `Blurhasher` class and share your implementation by creating a PullRequest, updating this README.md
 
 #### Decoding a Blurhash string into an image
+
+##### Method 1
 
 1) Write a method to convert a two-dimensional array of `Blurhash.Pixel` to an image your library supports
 2) Create a two-dimensional `Pixel` array where the first dimension is the desired witdh of the image and the second dimension is the desired height of the image
 3) Call `Blurhash.Core.Decode` with this array and the input string.
 4) Call your converter-method with the `Pixel` array filled by `Blurhash.Core.Decode`
-3) Encapsulate this in a static `Decode` method in a Library specific `Blurhasher` class and share your implementation by creating a PullRequest
+5) Encapsulate this in a static `Decode` method in a Library specific `Blurhasher` class and share your implementation by creating a PullRequest, updating this README.md
+
+This method needs you to create an array to hold _all_ the pixels of your image in the representation of `Blurhash.Pixel` at once, possibly using up lots of space.
+Instead there is another method that allows you to process the image in chunks.
+
+##### Method 2
+
+1) Create a `StreamedDecoder` instance with a callback which is called for each chunk of pixels.
+2) In your callback method, write the pixels reported directly to your image.
+3) Call `StreamedDecoder.Run` to start decoding the image.
+4) Encapsulate this in a static `Decode` method in a Library specific `Blurhasher` class and share your implementation by creating a PullRequest, updating this README.md
 
 #### Sharing your code 
 
