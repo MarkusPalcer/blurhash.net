@@ -8,12 +8,11 @@ public class StreamedDecoder
     private readonly int outputWidth;
     private readonly int outputHeight;
     private readonly ResultCallback resultCallback;
-    private readonly double punch;
     private readonly IProgress<int>? progressCallback;
-    private readonly int componentsY;
-    private readonly int componentsX;
-    private readonly double maximumValue;
-    private readonly Pixel[,] coefficients;
+    private int componentsY;
+    private int componentsX;
+    private double maximumValue;
+    private Pixel[,] coefficients;
 
     public delegate void ResultCallback(ReadOnlySpan<StreamedPixel> pixels);
     
@@ -33,22 +32,18 @@ public class StreamedDecoder
         this.outputWidth = outputWidth;
         this.outputHeight = outputHeight;
         this.resultCallback = resultCallback;
-        this.punch = punch;
         this.progressCallback = progressCallback;
         
         var blurhashSpan = blurhash.AsSpan();
         var sizeFlag = blurhashSpan.Slice(0, 1).DecodeBase83();
 
-        componentsY = sizeFlag / 9 + 1;
-        componentsX = sizeFlag % 9 + 1;
-        if (blurhash.Length != 4 + 2 * componentsX * componentsY)
-        {
-            throw new ArgumentException("Blurhash value is missing data", nameof(blurhash));
-        }
-        
-        var quantizedMaximumValue = (double)blurhashSpan.Slice(1, 1).DecodeBase83();
-        maximumValue = (quantizedMaximumValue + 1.0) / 166.0;
-        
+        DecodeComponentCount(blurhash, sizeFlag);
+        DecodeMaximumValue(blurhashSpan);
+        DecodeCoefficients(punch, blurhashSpan);
+    }
+
+    private void DecodeCoefficients(double punch, ReadOnlySpan<char> blurhashSpan)
+    {
         coefficients = new Pixel[componentsX, componentsY];
         var componentIndex = 0;
         for (var yComponent = 0; yComponent < componentsY; yComponent++)
@@ -68,7 +63,23 @@ public class StreamedDecoder
             componentIndex++;
         }
     }
-    
+
+    private void DecodeMaximumValue(ReadOnlySpan<char> blurhashSpan)
+    {
+        var quantizedMaximumValue = (double)blurhashSpan.Slice(1, 1).DecodeBase83();
+        maximumValue = (quantizedMaximumValue + 1.0) / 166.0;
+    }
+
+    private void DecodeComponentCount(string blurhash, int sizeFlag)
+    {
+        componentsY = sizeFlag / 9 + 1;
+        componentsX = sizeFlag % 9 + 1;
+        if (blurhash.Length != 4 + 2 * componentsX * componentsY)
+        {
+            throw new ArgumentException("Blurhash value is missing data", nameof(blurhash));
+        }
+    }
+
     public void Decode()
     {
         var blurhashSpan = blurhash.AsSpan();
