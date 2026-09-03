@@ -7,31 +7,34 @@ public class StreamedDecoder
     private readonly string blurhash;
     private readonly int outputWidth;
     private readonly int outputHeight;
+    private readonly ResultCallback resultCallback;
     private readonly double punch;
     private readonly IProgress<int>? progressCallback;
 
+    public delegate void ResultCallback(ReadOnlySpan<StreamedPixel> pixels);
+    
     public StreamedDecoder(string blurhash,
         int outputWidth,
         int outputHeight,
+        ResultCallback resultCallback,
         double punch = 1.0,
         IProgress<int>? progressCallback = null)
-    {
-        this.blurhash = blurhash;
-        this.outputWidth = outputWidth;
-        this.outputHeight = outputHeight;
-        this.punch = punch;
-        this.progressCallback = progressCallback;
-        
-        
-    }
-    
-    public Pixel[,] Decode()
     {
         if (blurhash.Length < 6)
         {
             throw new ArgumentException("Blurhash value needs to be at least 6 characters", nameof(blurhash));
         }
-
+        
+        this.blurhash = blurhash;
+        this.outputWidth = outputWidth;
+        this.outputHeight = outputHeight;
+        this.resultCallback = resultCallback;
+        this.punch = punch;
+        this.progressCallback = progressCallback;
+    }
+    
+    public void Decode()
+    {
         var blurhashSpan = blurhash.AsSpan();
 
         var pixels = new Pixel[outputWidth, outputHeight];
@@ -114,7 +117,21 @@ public class StreamedDecoder
             progressCallback?.Report(componentIndex * 100 / componentCount);
             componentIndex++;
         }
-
-        return pixels;
+        
+        Span<StreamedPixel> buffer = stackalloc StreamedPixel[outputHeight];
+        
+        for (var xPixel = 0; xPixel < outputWidth; xPixel++)
+        {
+            for (var yPixel = 0; yPixel < outputHeight; yPixel++)
+            {
+                buffer[yPixel].Red = pixels[xPixel, yPixel].Red;
+                buffer[yPixel].Green = pixels[xPixel, yPixel].Green;
+                buffer[yPixel].Blue = pixels[xPixel, yPixel].Blue;
+                buffer[yPixel].X = xPixel;
+                buffer[yPixel].Y = yPixel;
+            }
+            
+            resultCallback(buffer);
+        }
     }
 }
