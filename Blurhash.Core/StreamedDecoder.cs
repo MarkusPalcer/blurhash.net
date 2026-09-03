@@ -97,20 +97,20 @@ public class StreamedDecoder
             result.Blue = 0.0;
         }
 
-        var xCosines = new double[outputWidth];
-        var yCosines = new double[outputHeight];
+        var xCosines = new double[componentsX, outputWidth];
+        var yCosines = new double[componentsY, outputHeight];
 
         for (var componentX = 0; componentX < componentsX; componentX++)
         for (var componentY = 0; componentY < componentsY; componentY++)
         {
             for (var xPixel = 0; xPixel < outputWidth; xPixel++)
             {
-                xCosines[xPixel] = Math.Cos((Math.PI * xPixel * componentX) / outputWidth);
+                xCosines[componentX, xPixel] = Math.Cos((Math.PI * xPixel * componentX) / outputWidth);
             }
 
             for (var yPixel = 0; yPixel < outputHeight; yPixel++)
             {
-                yCosines[yPixel] = Math.Cos((Math.PI * yPixel * componentY) / outputHeight);
+                yCosines[componentY, yPixel] = Math.Cos((Math.PI * yPixel * componentY) / outputHeight);
             }
 
             var coefficient = coefficients[componentX, componentY];
@@ -120,7 +120,7 @@ public class StreamedDecoder
             {
                 ref var result = ref pixels[xPixel, yPixel];
 
-                var basis = xCosines[xPixel] * yCosines[yPixel];
+                var basis = xCosines[componentX, xPixel] * yCosines[componentY, yPixel];
 
                 result.Red += coefficient.Red * basis;
                 result.Green += coefficient.Green * basis;
