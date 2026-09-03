@@ -231,7 +231,7 @@ public static class Core
         return (roundedR << 16) + (roundedG << 8) + roundedB;
     }
 
-    private static Pixel DecodeDc(BigInteger value)
+    public static Pixel DecodeDc(BigInteger value)
     {
         var intR = (int)value >> 16;
         var intG = (int)(value >> 8) & 255;
@@ -239,7 +239,7 @@ public static class Core
         return new Pixel(MathUtils.SRgbToLinear(intR), MathUtils.SRgbToLinear(intG), MathUtils.SRgbToLinear(intB));
     }
 
-    private static Pixel DecodeAc(BigInteger value, double maximumValue) {
+    public static Pixel DecodeAc(BigInteger value, double maximumValue) {
         var quantizedR = (double) (value / (19 * 19));
         var quantizedG = (double) ((value / 19) % 19);
         var quantizedB = (double) (value % 19);
