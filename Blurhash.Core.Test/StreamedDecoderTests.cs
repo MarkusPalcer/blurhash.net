@@ -34,7 +34,7 @@ public class StreamedDecoderTests
         }
 
         var decoder = new StreamedDecoder(ReferenceInput, 50, 50, ResultCallback);
-        decoder.Decode();
+        decoder.Run();
         result.Should().BeEquivalentTo(ReferenceResult);
     }
 }

@@ -9,14 +9,14 @@ public class StreamedDecoder
     private readonly int outputWidth;
     private readonly int outputHeight;
 
-    private int componentsY;
-    private int componentsX;
+    private readonly int componentsY;
+    private readonly int componentsX;
 
-    private double maximumValue;
-    private Pixel[,] coefficients;
+    private readonly double maximumValue;
+    private readonly Pixel[,] coefficients;
 
-    private double[,] xCosines;
-    private double[,] yCosines;
+    private readonly double[,] xCosines;
+    private readonly double[,] yCosines;
 
     private readonly ResultCallback resultCallback;
     private readonly IProgress<int>? progressCallback;
@@ -40,18 +40,20 @@ public class StreamedDecoder
         this.outputHeight = outputHeight;
         this.resultCallback = resultCallback;
         this.progressCallback = progressCallback;
+        
+        (componentsX, componentsY) = DecodeComponentCount();
 
-        DecodeComponentCount();
-        DecodeMaximumValue();
+        xCosines = new double[componentsX, outputWidth];
+        yCosines = new double[componentsY, outputHeight];
+        coefficients = new Pixel[componentsX, componentsY];
+
+        maximumValue = DecodeMaximumValue();
         DecodeCoefficients(punch);
         CreateCosines();
     }
 
     private void CreateCosines()
     {
-        xCosines = new double[componentsX, outputWidth];
-        yCosines = new double[componentsY, outputHeight];
-
         for (var componentX = 0; componentX < componentsX; componentX++)
         for (var componentY = 0; componentY < componentsY; componentY++)
         {
@@ -69,7 +71,6 @@ public class StreamedDecoder
 
     private void DecodeCoefficients(double punch)
     {
-        coefficients = new Pixel[componentsX, componentsY];
         var componentIndex = 0;
         for (var yComponent = 0; yComponent < componentsY; yComponent++)
         for (var xComponent = 0; xComponent < componentsX; xComponent++)
@@ -89,24 +90,23 @@ public class StreamedDecoder
         }
     }
 
-    private void DecodeMaximumValue()
+    private double DecodeMaximumValue()
     {
         var quantizedMaximumValue = (double)blurhash.AsSpan().Slice(1, 1).DecodeBase83();
-        maximumValue = (quantizedMaximumValue + 1.0) / 166.0;
+        return (quantizedMaximumValue + 1.0) / 166.0;
     }
 
-    private void DecodeComponentCount()
+    private (int, int) DecodeComponentCount()
     {
         var sizeFlag = blurhash.AsSpan().Slice(0, 1).DecodeBase83();
-        componentsY = sizeFlag / 9 + 1;
-        componentsX = sizeFlag % 9 + 1;
-        if (blurhash.Length != 4 + 2 * componentsX * componentsY)
-        {
-            throw new ArgumentException("Blurhash value is missing data", nameof(blurhash));
-        }
+        var y = sizeFlag / 9 + 1;
+        var x = sizeFlag % 9 + 1;
+        return blurhash.Length != 4 + 2 * x * y
+            ? throw new ArgumentException("Blurhash value is missing data", nameof(blurhash)) 
+            : (x, y);
     }
 
-    public void Decode()
+    public void Run()
     {
         Span<StreamedPixel> pixels = stackalloc StreamedPixel[outputHeight];
 
