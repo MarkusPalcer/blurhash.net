@@ -72,13 +72,23 @@ Instead there is another method which allows you to process the image in chunks.
 
 #### Decoding a Blurhash string into an image
 
+##### Method 1
+
 1) Write a method to convert a two-dimensional array of `Blurhash.Pixel` to an image your library supports
 2) Create a two-dimensional `Pixel` array where the first dimension is the desired witdh of the image and the second dimension is the desired height of the image
 3) Call `Blurhash.Core.Decode` with this array and the input string.
 4) Call your converter-method with the `Pixel` array filled by `Blurhash.Core.Decode`
 5) Encapsulate this in a static `Decode` method in a Library specific `Blurhasher` class and share your implementation by creating a PullRequest, updating this README.md
 
-Sadly decoding can'
+This method needs you to create an array to hold _all_ the pixels of your image in the representation of `Blurhash.Pixel` at once, possibly using up lots of space.
+Instead there is another method that allows you to process the image in chunks.
+
+##### Method 2
+
+1) Create a `StreamedDecoder` instance with a callback which is called for each chunk of pixels.
+2) In your callback method, write the pixels reported directly to your image.
+3) Call `StreamedDecoder.Run` to start decoding the image.
+4) Encapsulate this in a static `Decode` method in a Library specific `Blurhasher` class and share your implementation by creating a PullRequest, updating this README.md
 
 #### Sharing your code 
 
